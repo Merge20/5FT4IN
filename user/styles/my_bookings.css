@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #f0f4ff;
+}
+
+.nav {
+    background: #6b92ff;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    position: relative;
+    font-size: 16px;
+}
+
+.nav a::after {
+    content: "";
+    width: 0%;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: .3s;
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 25px 20px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #555;
+    font-size: 17px;
+}
+
+.table-box {
+    margin: 40px 25px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #6b92ff;
+    color: #fff;
+    padding: 12px;
+    font-size: 18px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    font-size: 17px;
+    border-bottom: 1px solid #eeeeee;
+    color: #333;
+}
+
+tr:hover td {
+    background: #eef3ff;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.status.active {
+    background: #4caf50;
+}
+
+.status.pending {
+    background: #ff9800;
+}
+
+.status.cancelled {
+    background: #f44336;
+}
+
+.cancel-btn {
+    padding: 8px 16px;
+    background: #ff5b5b;
+    border: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background: #e44d4d;
+}
