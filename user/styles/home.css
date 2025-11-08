@@ -9,6 +9,7 @@
 
 body {
     background: linear-gradient(135deg, #e7edff, #f8fbff);
+    color: #2f2f2f;
 }
 
 .nav {
@@ -24,7 +25,6 @@ body {
     color: #fff;
     font-weight: 500;
     position: relative;
-    font-size: 16px;
 }
 
 .nav a::after {
@@ -42,75 +42,189 @@ body {
     width: 100%;
 }
 
+/* HERO SECTION */
 .hero {
     text-align: center;
-    padding: 100px 25px 60px;
+    margin-top: 70px;
+    margin-bottom: 50px;
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 38px;
     font-weight: 600;
-    color: #2f2f2f;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .hero p {
-    font-size: 18px;
     color: #555;
-    margin-bottom: 30px;
+    font-size: 17px;
 }
 
 .browse-btn {
+    display: inline-block;
+    margin-top: 25px;
     background: #6b92ff;
-    color: #fff;
-    text-decoration: none;
-    padding: 14px 28px;
+    color: white;
+    padding: 12px 28px;
     border-radius: 8px;
+    text-decoration: none;
     font-weight: 500;
-    transition: 0.3s;
+    transition: 0.25s;
+    box-shadow: 0 5px 20px rgba(107, 146, 255, 0.35);
 }
 
 .browse-btn:hover {
-    background: #5576d9;
+    background: #547be7;
+    transform: translateY(-3px);
 }
 
+/* FEATURES */
 .features {
     display: flex;
     justify-content: center;
-    align-items: stretch;
-    gap: 30px;
+    gap: 35px;
     flex-wrap: wrap;
-    padding: 40px 25px 60px;
+    margin: 60px auto;
+    width: 90%;
+    max-width: 1100px;
 }
 
 .feature-card {
-    background: #fff;
+    background: white;
+    border-radius: 14px;
     width: 300px;
     padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     text-align: center;
-    transition: 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 .icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-    color: #6b92ff;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50%;
+    font-size: 26px;
+    margin: 0 auto 15px auto;
 }
 
-.feature-card h3 {
+.icon.blue {
+    background: linear-gradient(135deg, #6b92ff, #4e73e0);
+}
+
+.icon.green {
+    background: linear-gradient(135deg, #28a745, #208a38);
+}
+
+.icon.orange {
+    background: linear-gradient(135deg, #ffae00, #ff8800);
+}
+
+/* FEATURED SECTION */
+.featured {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.featured h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1100px;
+}
+
+.property-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.property-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.property-info {
+    padding: 15px;
+}
+
+.property-info h3 {
     font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
+    font-weight: 600;
+    color: #2f2f2f;
 }
 
-.feature-card p {
-    color: #555;
+.property-info .location {
+    color: #666;
     font-size: 15px;
+    margin: 4px 0;
+}
+
+.property-info .location i {
+    color: #6b92ff;
+    margin-right: 5px;
+}
+
+.price {
+    color: #6b92ff;
+    font-weight: 600;
+    margin: 6px 0;
+    font-size: 17px;
+}
+
+.details-btn {
+    display: inline-block;
+    background: #6b92ff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+.details-btn:hover {
+    background: #547be7;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        width: 80%;
+    }
 }

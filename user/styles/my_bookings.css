@@ -8,7 +8,8 @@
 }
 
 body {
-    background: #f0f4ff;
+    background: linear-gradient(135deg, #e7edff, #f8fbff);
+    color: #333;
 }
 
 .nav {
@@ -24,7 +25,6 @@ body {
     color: #fff;
     font-weight: 500;
     position: relative;
-    font-size: 16px;
 }
 
 .nav a::after {
@@ -44,83 +44,110 @@ body {
 
 .hero {
     text-align: center;
-    padding: 60px 25px 20px;
+    margin-top: 60px;
 }
 
 .hero h1 {
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
+    color: #2f2f2f;
+    margin-bottom: 8px;
+}
+
+.hero h1 i {
+    color: #6b92ff;
+    margin-right: 8px;
 }
 
 .hero p {
-    color: #555;
     font-size: 17px;
+    color: #555;
 }
 
 .table-box {
-    margin: 40px 25px;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    width: 90%;
+    margin: 40px auto 80px auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+    padding: 20px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 800px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 th {
     background: #6b92ff;
-    color: #fff;
-    padding: 12px;
-    font-size: 18px;
-    text-align: left;
-}
-
-td {
-    padding: 12px;
-    font-size: 17px;
-    border-bottom: 1px solid #eeeeee;
-    color: #333;
-}
-
-tr:hover td {
-    background: #eef3ff;
-}
-
-.status {
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #fff;
+    color: white;
     font-weight: 500;
 }
 
-.status.active {
-    background: #4caf50;
+tr:hover td {
+    background: #f4f8ff;
+}
+
+/* Status Colors */
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
 }
 
 .status.pending {
-    background: #ff9800;
+    background: #ffae00;
 }
-
+.status.confirmed {
+    background: #28a745;
+}
 .status.cancelled {
-    background: #f44336;
+    background: #dc3545;
 }
 
+/* Buttons */
 .cancel-btn {
-    padding: 8px 16px;
     background: #ff5b5b;
     border: none;
     color: white;
-    font-size: 15px;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+    transition: 0.25s;
 }
 
 .cancel-btn:hover {
     background: #e44d4d;
+}
+
+.cancel-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-box {
+        width: 95%;
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
 }

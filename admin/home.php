@@ -19,8 +19,10 @@ $admin_name = $_SESSION['user_name'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Home</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./styles/home.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div class="nav">
@@ -33,25 +35,24 @@ $admin_name = $_SESSION['user_name'];
     </div>
 
     <div class="hero">
-        <h1>Welcome Back, <?php echo htmlspecialchars($admin_name); ?> 👋</h1>
-        <p>Control and monitor your house rental platform from one place.</p>
+        <h1>Welcome Back, <?php echo htmlspecialchars($admin_name); ?></h1>
     </div>
 
     <div class="cards">
         <div class="card">
-            <div class="icon" style="display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;">👥</div>
+            <div class="icon blue"><i class="fa-solid fa-users"></i></div>
             <span>Users</span>
-            <p style="font-size:28px;font-weight:600;margin-top:6px;"><?php echo $userCount; ?></p>
+            <p class="count"><?php echo $userCount; ?></p>
         </div>
         <div class="card">
-            <div class="icon" style="display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;">🏠</div>
+            <div class="icon green"><i class="fa-solid fa-house"></i></div>
             <span>Properties</span>
-            <p style="font-size:28px;font-weight:600;margin-top:6px;"><?php echo $propertyCount; ?></p>
+            <p class="count"><?php echo $propertyCount; ?></p>
         </div>
         <div class="card">
-            <div class="icon" style="display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;">📅</div>
+            <div class="icon orange"><i class="fa-solid fa-calendar-check"></i></div>
             <span>Bookings</span>
-            <p style="font-size:28px;font-weight:600;margin-top:6px;"><?php echo $bookingCount; ?></p>
+            <p class="count"><?php echo $bookingCount; ?></p>
         </div>
     </div>
 </body>

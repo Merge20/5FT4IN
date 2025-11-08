@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -9,30 +9,38 @@ include '../backend/db_connect.php';
 
 $message = "";
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST['title'];
     $location = $_POST['location'];
     $price = $_POST['price'];
     $type = $_POST['type'];
     $description = $_POST['description'];
+    $details = $_POST['details'];
+    $amenities = isset($_POST['amenities']) ? implode(", ", $_POST['amenities']) : '';
 
     // Handle image upload
     $target_dir = "../uploads/";
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
+
     $image_name = basename($_FILES["image"]["name"]);
     $target_file = $target_dir . $image_name;
-    $uploadOk = move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-    if ($uploadOk) {
-        $image_path = "./uploads/" . $image_name;
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        $image_path = "uploads/" . $image_name;
 
-        $sql = "INSERT INTO properties (title, location, price, type, description, image)
-                VALUES ('$title', '$location', '$price', '$type', '$description', '$image_path')";
-
+        $sql = "INSERT INTO properties (title, location, price, type, description, details, image)
+                VALUES ('$title', '$location', '$price', '$type', '$description', '$details', '$image_path')";
+        
         if ($conn->query($sql) === TRUE) {
+            $property_id = $conn->insert_id;
+
+            // Insert amenities into a separate table
+            if (!empty($amenities)) {
+                $conn->query("INSERT INTO property_amenities (property_id, amenities) VALUES ('$property_id', '$amenities')");
+            }
+
             $message = "✅ Property added successfully!";
         } else {
             $message = "❌ Database error: " . $conn->error;
@@ -63,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="hero">Add Property</div>
 
     <div class="form-box">
-        <?php if (!empty($message)) echo "<p style='color: green; text-align:center;'>$message</p>"; ?>
+        <?php if (!empty($message)) echo "<p style='color:green;text-align:center;'>$message</p>"; ?>
         <form method="POST" enctype="multipart/form-data">
             <label>Property Name</label>
             <input type="text" name="title" placeholder="Enter property name" required>
@@ -71,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label>Location</label>
             <input type="text" name="location" placeholder="Enter location" required>
 
-            <label>Monthly Rent</label>
+            <label>Monthly Rent (₹)</label>
             <input type="text" name="price" placeholder="Example: 18000" required>
 
             <label>Property Type</label>
@@ -83,8 +91,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <option>Room</option>
             </select>
 
-            <label>Description</label>
-            <textarea name="description" placeholder="Enter short property details" required></textarea>
+            <label>Short Description</label>
+            <textarea name="description" placeholder="Brief summary (appears in listings)" required></textarea>
+
+            <label>Full Details</label>
+            <textarea name="details" placeholder="Add full details, amenities, nearby landmarks, etc." rows="6" required></textarea>
+
+            <label>Amenities (select all that apply)</label>
+            <div class="amenities-box">
+                <label><input type="checkbox" name="amenities[]" value="WiFi"> WiFi</label>
+                <label><input type="checkbox" name="amenities[]" value="Parking"> Parking</label>
+                <label><input type="checkbox" name="amenities[]" value="AC"> AC</label>
+                <label><input type="checkbox" name="amenities[]" value="Balcony"> Balcony</label>
+                <label><input type="checkbox" name="amenities[]" value="Furnished"> Furnished</label>
+            </div>
 
             <label>Upload Image</label>
             <input type="file" name="image" accept="image/*" required>

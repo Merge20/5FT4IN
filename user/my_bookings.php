@@ -23,6 +23,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings</title>
     <link rel="stylesheet" href="./styles/my_bookings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div class="nav">
@@ -33,7 +34,7 @@ $result = $conn->query($sql);
     </div>
 
     <div class="hero">
-        <h1>My Bookings</h1>
+        <h1><i class="fa-solid fa-calendar-check"></i> My Bookings</h1>
         <p>Track all your current and past property bookings.</p>
     </div>
 
@@ -41,13 +42,13 @@ $result = $conn->query($sql);
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Property</th>
-                    <th>Location</th>
-                    <th>Check-In</th>
-                    <th>Check-Out</th>
-                    <th>Status</th>
-                    <th>Cancel</th>
+                    <th><i class="fa-solid fa-id-card"></i> ID</th>
+                    <th><i class="fa-solid fa-house"></i> Property</th>
+                    <th><i class="fa-solid fa-location-dot"></i> Location</th>
+                    <th><i class="fa-solid fa-door-open"></i> Check-In</th>
+                    <th><i class="fa-solid fa-door-closed"></i> Check-Out</th>
+                    <th><i class="fa-solid fa-circle-info"></i> Status</th>
+                    <th><i class="fa-solid fa-ban"></i> Cancel</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,7 @@ $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $statusClass = strtolower($row['status']);
+                        $disabled = ($row['status'] === 'Cancelled' || $row['status'] === 'Confirmed') ? "disabled" : "";
                         echo "<tr>
                                 <td>BK{$row['booking_id']}</td>
                                 <td>{$row['property_name']}</td>
@@ -65,7 +67,7 @@ $result = $conn->query($sql);
                                 <td>
                                     <form method='POST' action='cancel_booking.php' onsubmit='return confirm(\"Cancel this booking?\");'>
                                         <input type='hidden' name='booking_id' value='{$row['booking_id']}'>
-                                        <button type='submit' class='cancel-btn'>Cancel</button>
+                                        <button type='submit' class='cancel-btn' {$disabled}>Cancel</button>
                                     </form>
                                 </td>
                               </tr>";

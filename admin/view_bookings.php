@@ -8,15 +8,21 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 include '../backend/db_connect.php';
 
 // Handle status update
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id']) && isset($_POST['status'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id']) && isset($_POST['action'])) {
     $booking_id = $_POST['booking_id'];
-    $status = $_POST['status'];
-    $conn->query("UPDATE bookings SET status='$status' WHERE id='$booking_id'");
+    $action = $_POST['action'];
+
+    if ($action === 'confirm') {
+        $conn->query("UPDATE bookings SET status='Confirmed' WHERE id='$booking_id'");
+    } elseif ($action === 'cancel') {
+        $conn->query("UPDATE bookings SET status='Cancelled' WHERE id='$booking_id'");
+    }
+
     header("Location: view_bookings.php");
     exit();
 }
 
-// Fetch all bookings with user and property info
+// Fetch all bookings
 $sql = "SELECT b.id AS booking_id, b.booking_date, b.status,
                u.name AS user_name, u.email AS user_email,
                p.title AS property_name, p.location
@@ -67,28 +73,43 @@ $result = $conn->query($sql);
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        $statusColor = strtolower($row['status']);
-                        echo "
-                        <tr>
-                            <td>BK{$row['booking_id']}</td>
-                            <td>{$row['user_name']}</td>
-                            <td>{$row['user_email']}</td>
-                            <td>{$row['property_name']}</td>
-                            <td>{$row['location']}</td>
-                            <td>{$row['booking_date']}</td>
-                            <td><span class='status {$statusColor}'>{$row['status']}</span></td>
-                            <td>
+                        $status = strtolower($row['status']);
+
+                        echo "<tr>
+                                <td>BK{$row['booking_id']}</td>
+                                <td>{$row['user_name']}</td>
+                                <td>{$row['user_email']}</td>
+                                <td>{$row['property_name']}</td>
+                                <td>{$row['location']}</td>
+                                <td>{$row['booking_date']}</td>
+                                <td><span class='status {$status}'>{$row['status']}</span></td>
+                                <td>";
+
+                        // Action buttons based on status
+                        if ($status === 'pending') {
+                            echo "
                                 <form method='POST' action='' style='display:inline;'>
                                     <input type='hidden' name='booking_id' value='{$row['booking_id']}'>
-                                    <select name='status' required style='padding:4px;border-radius:4px;'>
-                                        <option value='Pending' " . ($row['status'] == 'Pending' ? 'selected' : '') . ">Pending</option>
-                                        <option value='Confirmed' " . ($row['status'] == 'Confirmed' ? 'selected' : '') . ">Confirmed</option>
-                                        <option value='Cancelled' " . ($row['status'] == 'Cancelled' ? 'selected' : '') . ">Cancelled</option>
-                                    </select>
-                                    <button type='submit' class='update-btn'>Update</button>
+                                    <button type='submit' name='action' value='confirm' class='update-btn confirm-btn'>Confirm</button>
                                 </form>
-                            </td>
-                        </tr>";
+                                <form method='POST' action='' style='display:inline;'>
+                                    <input type='hidden' name='booking_id' value='{$row['booking_id']}'>
+                                    <button type='submit' name='action' value='cancel' class='update-btn cancel-btn'>Cancel</button>
+                                </form>";
+                        } elseif ($status === 'confirmed') {
+                            echo "
+                                <button class='update-btn confirm-btn disabled-btn' disabled>Confirm</button>
+                                <form method='POST' action='' style='display:inline;'>
+                                    <input type='hidden' name='booking_id' value='{$row['booking_id']}'>
+                                    <button type='submit' name='action' value='cancel' class='update-btn cancel-btn'>Cancel</button>
+                                </form>";
+                        } elseif ($status === 'cancelled') {
+                            echo "
+                                <button class='update-btn confirm-btn disabled-btn' disabled>Confirm</button>
+                                <button class='update-btn cancel-btn disabled-btn' disabled>Cancel</button>";
+                        }
+
+                        echo "</td></tr>";
                     }
                 } else {
                     echo "<tr><td colspan='8' style='text-align:center;'>No bookings found.</td></tr>";

@@ -7,8 +7,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 
 include '../backend/db_connect.php';
 
-// Handle delete request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+// Handle delete property request
+if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
     $conn->query("DELETE FROM properties WHERE id='$delete_id'");
     header("Location: manage_properties.php");
@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 }
 
 // Fetch all properties
-$result = $conn->query("SELECT * FROM properties ORDER BY id DESC");
+$sql = "SELECT * FROM properties ORDER BY id DESC";
+$result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +39,7 @@ $result = $conn->query("SELECT * FROM properties ORDER BY id DESC");
 
     <div class="hero-row">
         <div class="hero-title">Manage Properties</div>
-        <button class="add-btn" onclick="window.location.href='add_property.php'">Add Property</button>
+        <a href="add_property.php" class="add-btn">+ Add Property</a>
     </div>
 
     <div class="table-box">
@@ -47,9 +48,10 @@ $result = $conn->query("SELECT * FROM properties ORDER BY id DESC");
                 <tr>
                     <th>ID</th>
                     <th>Property Name</th>
+                    <th>Type</th>
                     <th>Location</th>
-                    <th>Rent</th>
-                    <th>Action</th>
+                    <th>Rent (₹)</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,20 +60,22 @@ $result = $conn->query("SELECT * FROM properties ORDER BY id DESC");
                     while ($row = $result->fetch_assoc()) {
                         echo "
                         <tr>
-                            <td>{$row['id']}</td>
+                            <td>P{$row['id']}</td>
                             <td>{$row['title']}</td>
+                            <td>{$row['type']}</td>
                             <td>{$row['location']}</td>
-                            <td>₹{$row['price']}</td>
+                            <td>{$row['price']}</td>
                             <td>
-                                <form method='POST' action='' onsubmit='return confirm(\"Are you sure you want to delete this property?\");'>
+                                <a href='edit_property.php?id={$row['id']}' class='edit-btn'>Edit</a>
+                                <form method='POST' action='' style='display:inline;' onsubmit='return confirm(\"Are you sure you want to delete this property?\")'>
                                     <input type='hidden' name='delete_id' value='{$row['id']}'>
-                                    <button type='submit' class='cancel-btn'>Delete</button>
+                                    <button type='submit' class='delete-btn'>Delete</button>
                                 </form>
                             </td>
                         </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5' style='text-align:center;'>No properties found.</td></tr>";
+                    echo "<tr><td colspan='6' style='text-align:center;'>No properties found.</td></tr>";
                 }
                 ?>
             </tbody>

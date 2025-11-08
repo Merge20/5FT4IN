@@ -8,7 +8,7 @@
 }
 
 body {
-    background: #f0f4ff;
+    background: linear-gradient(135deg, #e7edff, #f8fbff);
 }
 
 .nav {
@@ -43,38 +43,42 @@ body {
 
 .hero {
     text-align: center;
-    padding: 35px 0;
-    font-size: 32px;
+    font-size: 35px;
     font-weight: 600;
-    color: #333;
+    color: #2f2f2f;
+    margin-top: 40px;
 }
 
 .form-box {
-    margin: 0 25px;
     background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.08);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 90%;
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
 label {
-    font-size: 17px;
-    margin-top: 12px;
     display: block;
+    font-weight: 500;
+    margin: 15px 0 8px 0;
     color: #333;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 12px;
-    margin-top: 6px;
-    border: 1px solid #c4ccff;
-    border-radius: 6px;
-    background: #f8faff;
-    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #6b92ff;
+    box-shadow: 0 0 6px rgba(107, 146, 255, 0.4);
 }
 
 textarea {
@@ -82,37 +86,26 @@ textarea {
     resize: none;
 }
 
+.image-preview img {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
 .save-btn {
+    margin-top: 25px;
     width: 100%;
-    padding: 12px;
     background: #6b92ff;
-    border: none;
     color: white;
-    font-size: 18px;
-    border-radius: 6px;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
 .save-btn:hover {
-    background: #5576d9;
-}
-
-.amenities-box {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.amenities-box label {
-    background: #f2f4ff;
-    padding: 8px 10px;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.amenities-box input {
-    margin-right: 8px;
+    background: #547be7;
 }

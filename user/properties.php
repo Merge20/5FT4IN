@@ -28,6 +28,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Properties</title>
     <link rel="stylesheet" href="./styles/properties.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div class="nav">
@@ -39,12 +40,12 @@ $result = $conn->query($sql);
 
     <div class="hero">
         <h1>Available Rental Properties</h1>
-        <p>Search and filter to find your ideal home.</p>
+        <p>Search, filter, and find your ideal home.</p>
     </div>
 
     <div class="search-bar">
         <form method="GET" action="properties.php">
-            <input type="text" name="search" placeholder="Search by location or name" value="<?php echo htmlspecialchars($search); ?>">
+            <input type="text" name="search" placeholder="🔍 Search by location or name" value="<?php echo htmlspecialchars($search); ?>">
             <select name="type">
                 <option <?php if($type=="All Types" || $type=="") echo "selected"; ?>>All Types</option>
                 <option <?php if($type=="Apartment") echo "selected"; ?>>Apartment</option>
@@ -52,7 +53,7 @@ $result = $conn->query($sql);
                 <option <?php if($type=="Studio") echo "selected"; ?>>Studio</option>
                 <option <?php if($type=="Room") echo "selected"; ?>>Room</option>
             </select>
-            <button type="submit" class="search-btn">Search</button>
+            <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
         </form>
     </div>
 
@@ -65,14 +66,14 @@ $result = $conn->query($sql);
                     <img src='../{$row['image']}' alt='{$row['title']}'>
                     <div class='property-info'>
                         <h3>{$row['title']}</h3>
-                        <p>{$row['location']}</p>
+                        <p class='location'><i class='fa-solid fa-location-dot'></i> {$row['location']}</p>
                         <p class='price'>₹{$row['price']} / month</p>
                         <a href='property_details.php?id={$row['id']}' class='details-btn'>View Details</a>
                     </div>
                 </div>";
             }
         } else {
-            echo "<p style='text-align:center; width:100%;'>No properties found.</p>";
+            echo "<p style='text-align:center; width:100%; font-size:18px;'>No properties found.</p>";
         }
         ?>
     </div>

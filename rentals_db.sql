@@ -36,3 +36,10 @@ CREATE TABLE admin (
 
 INSERT INTO admin (name, email, password)
 VALUES ('Admin', 'admin@gmail.com', 'admin123');
+
+CREATE TABLE property_amenities (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  property_id INT,
+  amenities TEXT,
+  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+);
